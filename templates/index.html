@@ -1,0 +1,26 @@
+<!doctype html>
+<title>Stock Information</title>
+<link rel=stylesheet type=text/css href='{{ url_for('static',filename='style_lulu.css')}}'>
+<div class=page>
+  <h1>Stock Information</h1>
+  <div class=metanav>
+
+    <h4>
+      Input a stock and the month/year of interest
+    </h4>
+
+    <form id='userinfoform' method='POST' action='stock_index' >
+      <p>
+    Ticker Symbol: <input type='text' name='stockindex' value = '{{ current_symbol }}' />
+      </p>
+      <p>
+    Month/Year (xx/xxxx) <input type='text' name='date' />
+      </p>
+      <p>
+    <input type='submit' value='Submit' />
+      </p>
+    </form>
+
+  </div>
+</div>
+</html>
