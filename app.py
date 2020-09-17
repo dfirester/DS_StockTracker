@@ -32,7 +32,8 @@ def displaystock():
    
     stock = request.form['stockindex']
     date = request.form['date']
-    unpack = stock_handler.generate_plot(stock,date)
+    showopen = request.form.get('showopen')
+    unpack = stock_handler.generate_plot(stock,date,showopen)
     script, div = unpack
 
     kwargs = {'script':script,'div':div}

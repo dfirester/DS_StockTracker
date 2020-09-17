@@ -84,9 +84,10 @@ class Stockplot():
         self.opens = value.T[0]
         self.close = value.T[3]
 
-    def generate_plot(self,stock,date):
+    def generate_plot(self,stock,date,*args):
         switch = self._getstock(stock,date)
        
+        
         if switch == 'badstock':
             title = 'No stock matching ' + stock + ' found'
         elif switch == 'baddate':
@@ -96,13 +97,24 @@ class Stockplot():
         N = len(self.close)
         x = np.arange(N)
 
+
+        
         source = ColumnDataSource(data=dict(x=x,y=self.close))
         plot = figure(plot_height=400,plot_width=600,title=title,tools='crosshair,pan,reset,save,wheel_zoom')
         plot.xaxis.ticker = [i*2 for i in range(N//2)]
         dictionary = {int(i):j for i,j in zip(np.arange(N),self.dates)}
         plot.xaxis.major_label_overrides = dictionary
 
-        plot.line('x','y',source=source,line_width=3,line_alpha=0.6)
+        plot.line('x','y',source=source,line_width=3,line_alpha=0.6,legend='Close Price')
+        
+
+        for arg in args:
+            if arg:
+                source2 = ColumnDataSource(data=dict(x=x,y=self.opens))
+                plot.line('x','y',source=source2,line_width=3,line_alpha=0.6,color='red',legend='Open Price')
+
+        plot.legend.location = "top_left"
+        plot.legend.click_policy="hide"
 
         return components(plot)
 
